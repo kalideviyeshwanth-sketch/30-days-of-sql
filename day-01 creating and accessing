@@ -1,0 +1,40 @@
+#creating a file
+  CREATE TABLE employees (
+    employee_id INT,
+    name VARCHAR(50),
+    age INT,
+    department VARCHAR(50),
+    salary INT,
+    city VARCHAR(50)
+);
+
+# adding data
+  INSERT INTO employees (employee_id, name, age, department, salary, city)
+VALUES
+(1, 'Rahul', 24, 'IT', 45000, 'Hyderabad'),
+(2, 'Priya', 27, 'HR', 50000, 'Bangalore'),
+(3, 'Arjun', 23, 'IT', 40000, 'Chennai'),
+(4, 'Sneha', 29, 'Finance', 60000, 'Hyderabad'),
+(5, 'Kiran', 26, 'Marketing', 48000, 'Mumbai'),
+(6, 'Ananya', 25, 'IT', 55000, 'Bangalore'),
+(7, 'Vikram', 31, 'Finance', 70000, 'Delhi'),
+(8, 'Meera', 28, 'HR', 52000, 'Hyderabad'),
+(9, 'Rohit', 22, 'Marketing', 42000, 'Chennai'),
+(10, 'Diya', 30, 'IT', 65000, 'Mumbai');
+
+# some important select functions
+  SELECT *
+FROM employees
+WHERE department = 'IT';
+
+SELECT *
+FROM employees
+WHERE salary <= 50000;
+
+SELECT *
+FROM employees
+WHERE department IN ('IT', 'Finance');
+
+SELECT *
+FROM employees
+WHERE name LIKE '%a';
