@@ -1,0 +1,431 @@
+# 🚀 Day 2 — SQL: DISTINCT, ORDER BY & LIMIT
+
+## 🎯 Goal
+
+Today I learned how to:
+
+* Remove duplicate values using `DISTINCT`
+* Sort query results using `ORDER BY`
+* Sort in ascending and descending order using `ASC` and `DESC`
+* Restrict the number of returned rows using `LIMIT`
+* Combine `DISTINCT`, `ORDER BY`, and `LIMIT`
+
+---
+
+# 1. DISTINCT
+
+`DISTINCT` removes duplicate values from the result.
+
+### Syntax
+
+```sql
+SELECT DISTINCT column_name
+FROM table_name;
+```
+
+### Example
+
+```sql
+SELECT DISTINCT department
+FROM employees;
+```
+
+This returns each department only once.
+
+### Multiple columns
+
+```sql
+SELECT DISTINCT department, job_role
+FROM employees;
+```
+
+`DISTINCT` considers the combination of both columns.
+
+---
+
+# 2. ORDER BY
+
+`ORDER BY` is used to sort query results.
+
+### Ascending order
+
+```sql
+SELECT name, salary
+FROM employees
+ORDER BY salary ASC;
+```
+
+`ASC` means ascending order.
+
+For numbers:
+
+```text
+10000
+20000
+30000
+40000
+```
+
+For text:
+
+```text
+A
+B
+C
+D
+```
+
+### Descending order
+
+```sql
+SELECT name, salary
+FROM employees
+ORDER BY salary DESC;
+```
+
+`DESC` means descending order.
+
+For numbers:
+
+```text
+40000
+30000
+20000
+10000
+```
+
+---
+
+# 3. ORDER BY Without ASC
+
+Ascending order is the default.
+
+```sql
+SELECT name, salary
+FROM employees
+ORDER BY salary;
+```
+
+This is equivalent to:
+
+```sql
+SELECT name, salary
+FROM employees
+ORDER BY salary ASC;
+```
+
+---
+
+# 4. Sorting By Multiple Columns
+
+We can sort using more than one column.
+
+```sql
+SELECT name, department, salary
+FROM employees
+ORDER BY department ASC, salary DESC;
+```
+
+The results are first sorted by department.
+
+If two employees belong to the same department, their salaries are sorted from highest to lowest.
+
+---
+
+# 5. LIMIT
+
+`LIMIT` controls how many rows are returned.
+
+### Example
+
+```sql
+SELECT *
+FROM employees
+LIMIT 5;
+```
+
+Only 5 rows are returned.
+
+---
+
+# 6. LIMIT With ORDER BY
+
+`LIMIT` becomes especially useful with `ORDER BY`.
+
+### Top 5 highest-paid employees
+
+```sql
+SELECT name, salary
+FROM employees
+ORDER BY salary DESC
+LIMIT 5;
+```
+
+### Top 3 lowest-paid employees
+
+```sql
+SELECT name, salary
+FROM employees
+ORDER BY salary ASC
+LIMIT 3;
+```
+
+---
+
+# 7. Combining DISTINCT + ORDER BY
+
+```sql
+SELECT DISTINCT department
+FROM employees
+ORDER BY department ASC;
+```
+
+This gives unique departments in alphabetical order.
+
+---
+
+# 8. Combining DISTINCT + ORDER BY + LIMIT
+
+```sql
+SELECT DISTINCT department
+FROM employees
+ORDER BY department ASC
+LIMIT 3;
+```
+
+This:
+
+1. Gets unique departments
+2. Sorts them alphabetically
+3. Returns only the first 3
+
+---
+
+# 9. Practical Examples
+
+### Example 1 — Unique cities
+
+```sql
+SELECT DISTINCT city
+FROM employees;
+```
+
+### Example 2 — Highest salary
+
+```sql
+SELECT name, salary
+FROM employees
+ORDER BY salary DESC
+LIMIT 1;
+```
+
+### Example 3 — Lowest salary
+
+```sql
+SELECT name, salary
+FROM employees
+ORDER BY salary ASC
+LIMIT 1;
+```
+
+### Example 4 — Top 10 salaries
+
+```sql
+SELECT name, salary
+FROM employees
+ORDER BY salary DESC
+LIMIT 10;
+```
+
+### Example 5 — Unique departments
+
+```sql
+SELECT DISTINCT department
+FROM employees
+ORDER BY department;
+```
+
+### Example 6 — Top 5 employees alphabetically
+
+```sql
+SELECT name
+FROM employees
+ORDER BY name ASC
+LIMIT 5;
+```
+
+### Example 7 — 5 highest salaries
+
+```sql
+SELECT name, salary
+FROM employees
+ORDER BY salary DESC
+LIMIT 5;
+```
+
+### Example 8 — Unique job roles
+
+```sql
+SELECT DISTINCT job_role
+FROM employees
+ORDER BY job_role;
+```
+
+---
+
+# 🧠 Practice Questions
+
+Use an `employees` table with columns:
+
+```text
+id
+name
+age
+department
+job_role
+salary
+city
+```
+
+### Q1
+
+Display all unique departments.
+
+```sql
+SELECT DISTINCT department
+FROM employees;
+```
+
+### Q2
+
+Display employees ordered by salary from lowest to highest.
+
+```sql
+SELECT name, salary
+FROM employees
+ORDER BY salary ASC;
+```
+
+### Q3
+
+Display employees ordered by salary from highest to lowest.
+
+```sql
+SELECT name, salary
+FROM employees
+ORDER BY salary DESC;
+```
+
+### Q4
+
+Display the 5 highest-paid employees.
+
+```sql
+SELECT name, salary
+FROM employees
+ORDER BY salary DESC
+LIMIT 5;
+```
+
+### Q5
+
+Display the 3 lowest-paid employees.
+
+```sql
+SELECT name, salary
+FROM employees
+ORDER BY salary ASC
+LIMIT 3;
+```
+
+### Q6
+
+Display unique cities in alphabetical order.
+
+```sql
+SELECT DISTINCT city
+FROM employees
+ORDER BY city ASC;
+```
+
+### Q7
+
+Display the first 10 employees alphabetically by name.
+
+```sql
+SELECT name
+FROM employees
+ORDER BY name ASC
+LIMIT 10;
+```
+
+### Q8
+
+Display the 5 employees with the highest salaries, showing their names, departments and salaries.
+
+```sql
+SELECT name, department, salary
+FROM employees
+ORDER BY salary DESC
+LIMIT 5;
+```
+
+### Q9
+
+Display unique job roles.
+
+```sql
+SELECT DISTINCT job_role
+FROM employees;
+```
+
+### Q10
+
+Display the first 5 unique departments alphabetically.
+
+```sql
+SELECT DISTINCT department
+FROM employees
+ORDER BY department ASC
+LIMIT 5;
+```
+
+---
+
+# 🔥 Key Takeaways
+
+| Command    | Purpose                   |
+| ---------- | ------------------------- |
+| `DISTINCT` | Removes duplicate results |
+| `ORDER BY` | Sorts results             |
+| `ASC`      | Ascending order           |
+| `DESC`     | Descending order          |
+| `LIMIT`    | Restricts number of rows  |
+
+### Important Pattern
+
+```sql
+SELECT column_name
+FROM table_name
+ORDER BY column_name DESC
+LIMIT 5;
+```
+
+This pattern is commonly used to find the **top 5** records according to a column.
+
+---
+
+# 📝 Day 2 Summary
+
+Today I learned:
+
+✅ `DISTINCT`
+✅ `ORDER BY`
+✅ `ASC`
+✅ `DESC`
+✅ `LIMIT`
+✅ Sorting by multiple columns
+✅ Combining `DISTINCT + ORDER BY`
+✅ Combining `ORDER BY + LIMIT`
+✅ Combining `DISTINCT + ORDER BY + LIMIT`
+
