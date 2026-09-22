@@ -1,0 +1,174 @@
+# Day 3 — SQL Filtering
+
+Today I learned how to filter specific rows from a table using the `WHERE` clause.
+
+## 1. WHERE
+
+`WHERE` is used when I only want rows that match a particular condition.
+
+```sql
+SELECT *
+FROM employees
+WHERE age > 25;
+```
+
+This returns employees whose age is greater than 25.
+
+## 2. Comparison operators
+
+Some common operators:
+
+```text
+=       equal to
+!=      not equal to
+>       greater than
+<       less than
+>=      greater than or equal to
+<=      less than or equal to
+```
+
+Example:
+
+```sql
+SELECT name, salary
+FROM employees
+WHERE salary >= 50000;
+```
+
+## 3. AND
+
+`AND` is used when both conditions need to be true.
+
+```sql
+SELECT *
+FROM employees
+WHERE department = 'IT'
+AND salary > 50000;
+```
+
+This gives employees who are in IT AND earn more than 50000.
+
+## 4. OR
+
+`OR` is used when either condition can be true.
+
+```sql
+SELECT *
+FROM employees
+WHERE department = 'IT'
+OR department = 'HR';
+```
+
+## 5. NOT
+
+`NOT` reverses a condition.
+
+```sql
+SELECT *
+FROM employees
+WHERE NOT department = 'HR';
+```
+
+This gives employees who are not in HR.
+
+## 6. IN
+
+`IN` is useful when checking multiple possible values.
+
+Instead of:
+
+```sql
+WHERE city = 'Hyderabad'
+OR city = 'Bangalore'
+OR city = 'Chennai'
+```
+
+I can write:
+
+```sql
+SELECT *
+FROM employees
+WHERE city IN ('Hyderabad', 'Bangalore', 'Chennai');
+```
+
+## 7. BETWEEN
+
+`BETWEEN` is used to filter values within a range.
+
+```sql
+SELECT *
+FROM employees
+WHERE salary BETWEEN 40000 AND 70000;
+```
+
+This selects salaries from 40000 to 70000.
+
+## 8. LIKE
+
+`LIKE` is mainly used for pattern matching with text.
+
+```sql
+SELECT *
+FROM employees
+WHERE name LIKE 'A%';
+```
+
+`%` means any number of characters.
+
+So `A%` matches names starting with A.
+
+Another example:
+
+```sql
+SELECT *
+FROM employees
+WHERE name LIKE '%an%';
+```
+
+This finds names containing `an`.
+
+`_` represents a single character.
+
+```sql
+WHERE name LIKE 'A_'
+```
+
+## 9. NULL values
+
+`NULL` means there is no value.
+
+I should use `IS NULL` instead of `= NULL`.
+
+```sql
+SELECT *
+FROM employees
+WHERE salary IS NULL;
+```
+
+To find values that are not NULL:
+
+```sql
+SELECT *
+FROM employees
+WHERE salary IS NOT NULL;
+```
+
+## Quick recap
+
+Today I learned:
+
+* `WHERE` → filter rows
+* `AND` → both conditions must be true
+* `OR` → either condition can be true
+* `NOT` → reverse a condition
+* `IN` → match multiple values
+* `BETWEEN` → filter a range
+* `LIKE` → pattern matching
+* `%` → any number of characters
+* `_` → one character
+* `IS NULL` → find missing values
+* `IS NOT NULL` → find non-missing values
+
+### Day 3 takeaway
+
+The main thing I learned today is how to get **only the data I actually need** instead of selecting every row from a table.
