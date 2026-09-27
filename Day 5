@@ -1,0 +1,148 @@
+Day 5 — SQL HAVING Clause
+
+Today I learned about the "HAVING" clause and how it is different from "WHERE".
+
+I already learned how "WHERE" filters individual rows and how "GROUP BY" creates groups. "HAVING" is used when I want to filter those groups after applying an aggregate function.
+
+1. HAVING
+
+"HAVING" is mainly used with "GROUP BY" to filter grouped results.
+
+For example:
+
+SELECT department, COUNT(*)
+FROM employees
+GROUP BY department
+HAVING COUNT(*) > 5;
+
+This first groups the employees by department and then only shows departments that have more than 5 employees.
+
+---
+
+2. WHERE vs HAVING
+
+The main difference:
+
+WHERE  → filters rows before grouping
+HAVING → filters groups after grouping
+
+Example using "WHERE":
+
+SELECT department, COUNT(*)
+FROM employees
+WHERE salary > 30000
+GROUP BY department;
+
+Here, employees with a salary of 30000 or less are removed first.
+
+Example using "HAVING":
+
+SELECT department, COUNT(*)
+FROM employees
+GROUP BY department
+HAVING COUNT(*) > 5;
+
+Here, the departments are grouped first, and then groups with 5 or fewer employees are removed.
+
+---
+
+3. Using WHERE and HAVING Together
+
+Both can be used in the same query.
+
+SELECT department, AVG(salary)
+FROM employees
+WHERE salary > 30000
+GROUP BY department
+HAVING AVG(salary) > 50000;
+
+The order is important:
+
+1. "WHERE" filters the rows
+2. "GROUP BY" creates groups
+3. "AVG()" calculates the average for each group
+4. "HAVING" filters the groups
+
+---
+
+4. HAVING with SUM()
+
+I can use "HAVING" with other aggregate functions too.
+
+SELECT department, SUM(salary)
+FROM employees
+GROUP BY department
+HAVING SUM(salary) > 500000;
+
+This shows departments where the total salary is greater than 500000.
+
+---
+
+5. HAVING with AVG()
+
+SELECT department, AVG(salary)
+FROM employees
+GROUP BY department
+HAVING AVG(salary) > 50000;
+
+This shows departments where the average salary is greater than 50000.
+
+---
+
+6. HAVING with MAX()
+
+SELECT department, MAX(salary)
+FROM employees
+GROUP BY department
+HAVING MAX(salary) > 80000;
+
+This shows departments where at least one employee has a salary greater than 80000.
+
+---
+
+7. Basic SQL Query Order
+
+One important thing I learned today is the general order in which these clauses are written:
+
+SELECT
+FROM
+WHERE
+GROUP BY
+HAVING
+ORDER BY
+LIMIT
+
+Example:
+
+SELECT department, AVG(salary) AS average_salary
+FROM employees
+WHERE salary > 30000
+GROUP BY department
+HAVING AVG(salary) > 50000
+ORDER BY average_salary DESC
+LIMIT 5;
+
+This combines several things I have learned so far.
+
+---
+
+Quick Revision
+
+WHERE      → filters individual rows
+GROUP BY   → creates groups
+HAVING     → filters groups
+COUNT()    → counts
+SUM()      → total
+AVG()      → average
+MIN()      → minimum
+MAX()      → maximum
+
+Day 5 Takeaway
+
+The biggest thing I learned today is:
+
+"WHERE" filters rows, while "HAVING" filters grouped results.
+
+"HAVING" becomes especially useful when I need to filter based on aggregate functions like "COUNT()", "SUM()" or "AVG()".
+
+Day 5 completed ✅
