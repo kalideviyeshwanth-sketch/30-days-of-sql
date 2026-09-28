@@ -1,0 +1,248 @@
+# Day 6 — SQL JOINs
+
+Today I learned about SQL `JOIN`s.
+
+The main idea behind a JOIN is to combine information from different tables using a column that they have in common.
+
+For example, suppose I have:
+
+### employees
+
+```text
+id | name  | department_id | salary
+1  | Ravi  | 101            | 50000
+2  | Anu   | 102            | 60000
+3  | Kiran | 101            | 45000
+4  | Priya | 103            | 55000
+```
+
+### departments
+
+```text
+department_id | department_name
+101           | IT
+102           | HR
+103           | Finance
+```
+
+Both tables have `department_id`, so I can use that to connect them.
+
+---
+
+## INNER JOIN
+
+`INNER JOIN` returns rows where there is a match in both tables.
+
+```sql
+SELECT e.name, d.department_name
+FROM employees e
+INNER JOIN departments d
+ON e.department_id = d.department_id;
+```
+
+The `ON` part tells SQL which columns should be matched.
+
+Result:
+
+```text
+Ravi   IT
+Anu    HR
+Kiran  IT
+Priya  Finance
+```
+
+If there is no matching department, that employee won't appear in an `INNER JOIN`.
+
+---
+
+## Table Aliases
+
+I can give tables shorter names to make the query easier to write.
+
+```sql
+SELECT e.name, d.department_name
+FROM employees AS e
+JOIN departments AS d
+ON e.department_id = d.department_id;
+```
+
+Here:
+
+```text
+e = employees
+d = departments
+```
+
+`AS` can also be left out:
+
+```sql
+FROM employees e
+JOIN departments d
+```
+
+I noticed this is used a lot in real SQL queries.
+
+---
+
+## LEFT JOIN
+
+`LEFT JOIN` keeps all the rows from the left table, even if there isn't a match in the right table.
+
+```sql
+SELECT e.name, d.department_name
+FROM employees e
+LEFT JOIN departments d
+ON e.department_id = d.department_id;
+```
+
+If an employee has no matching department, the employee still appears, but the department value will be `NULL`.
+
+Easy way to remember:
+
+```text
+LEFT JOIN → keep everything from the left table
+```
+
+---
+
+## RIGHT JOIN
+
+`RIGHT JOIN` does the opposite.
+
+```sql
+SELECT e.name, d.department_name
+FROM employees e
+RIGHT JOIN departments d
+ON e.department_id = d.department_id;
+```
+
+It keeps all rows from the right table.
+
+```text
+RIGHT JOIN → keep everything from the right table
+```
+
+---
+
+## FULL OUTER JOIN
+
+`FULL OUTER JOIN` keeps all rows from both tables.
+
+```sql
+SELECT e.name, d.department_name
+FROM employees e
+FULL OUTER JOIN departments d
+ON e.department_id = d.department_id;
+```
+
+If there is no match on either side, the missing values become `NULL`.
+
+Note: MySQL doesn't directly support `FULL OUTER JOIN`, while databases such as PostgreSQL do.
+
+---
+
+## JOIN with WHERE
+
+JOINs can be combined with things I learned earlier.
+
+For example, to find employees working in IT:
+
+```sql
+SELECT e.name, d.department_name
+FROM employees e
+JOIN departments d
+ON e.department_id = d.department_id
+WHERE d.department_name = 'IT';
+```
+
+The `JOIN` connects the tables and `WHERE` filters the result.
+
+---
+
+## JOIN with ORDER BY
+
+I can also sort the joined results.
+
+```sql
+SELECT e.name, d.department_name, e.salary
+FROM employees e
+JOIN departments d
+ON e.department_id = d.department_id
+ORDER BY e.salary DESC;
+```
+
+This displays the employees from highest salary to lowest.
+
+---
+
+## JOIN with GROUP BY
+
+I can use `GROUP BY` with a JOIN too.
+
+For example, to count employees in each department:
+
+```sql
+SELECT d.department_name, COUNT(e.id)
+FROM employees e
+JOIN departments d
+ON e.department_id = d.department_id
+GROUP BY d.department_name;
+```
+
+This gives the number of employees in each department.
+
+---
+
+## JOIN + GROUP BY + HAVING
+
+I can also use `HAVING` after grouping.
+
+```sql
+SELECT d.department_name, COUNT(e.id)
+FROM employees e
+JOIN departments d
+ON e.department_id = d.department_id
+GROUP BY d.department_name
+HAVING COUNT(e.id) > 1;
+```
+
+This only shows departments having more than one employee.
+
+---
+
+## Basic JOIN Structure
+
+The basic structure I need to remember is:
+
+```sql
+SELECT columns
+FROM table1
+JOIN table2
+ON table1.common_column = table2.common_column;
+```
+
+The important part is understanding what the `ON` condition is doing.
+
+It tells SQL **how the two tables are related**.
+
+---
+
+## Quick Revision
+
+```text
+INNER JOIN       → matching rows from both tables
+LEFT JOIN        → everything from left table
+RIGHT JOIN       → everything from right table
+FULL OUTER JOIN  → everything from both tables
+ON               → condition used to connect the tables
+```
+
+### Day 6 Takeaway
+
+Before today, I mostly worked with data from one table.
+
+Now I understand how to connect multiple tables and work with their data together.
+
+The biggest thing I learned is that the `ON` condition is what actually tells SQL how two tables are related.
+
+**Day 6 completed ✅**
