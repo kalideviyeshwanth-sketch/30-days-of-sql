@@ -1,0 +1,184 @@
+A subquery is basically a query written inside another query.
+
+At first it looks a little confusing, but the idea is simple:
+
+«The inner query gets some information, and the outer query uses that result.»
+
+---
+
+1. Basic Subquery
+
+Suppose I want to find employees who earn more than the average salary.
+
+First, I could find the average:
+
+SELECT AVG(salary)
+FROM employees;
+
+Then I can use that inside another query:
+
+SELECT name, salary
+FROM employees
+WHERE salary > (
+    SELECT AVG(salary)
+    FROM employees
+);
+
+The inner query calculates the average salary first.
+
+Then the outer query finds employees whose salary is greater than that average.
+
+---
+
+2. Subquery with MAX()
+
+I can use an aggregate function inside a subquery too.
+
+For example, to find the employee with the highest salary:
+
+SELECT name, salary
+FROM employees
+WHERE salary = (
+    SELECT MAX(salary)
+    FROM employees
+);
+
+The inner query finds the highest salary, and the outer query finds the employee who has it.
+
+---
+
+3. Subquery with IN
+
+A subquery can also return multiple values.
+
+For example, suppose I want employees who work in departments located in Hyderabad.
+
+SELECT name
+FROM employees
+WHERE department_id IN (
+    SELECT department_id
+    FROM departments
+    WHERE city = 'Hyderabad'
+);
+
+The inner query finds the department IDs in Hyderabad.
+
+The outer query then finds employees belonging to those departments.
+
+---
+
+4. Subquery with NOT IN
+
+"NOT IN" can be used when I want the opposite.
+
+SELECT name
+FROM employees
+WHERE department_id NOT IN (
+    SELECT department_id
+    FROM departments
+    WHERE city = 'Hyderabad'
+);
+
+This finds employees who don't belong to departments located in Hyderabad.
+
+---
+
+5. Subquery with EXISTS
+
+"EXISTS" checks whether the subquery returns at least one row.
+
+Example:
+
+SELECT name
+FROM employees e
+WHERE EXISTS (
+    SELECT 1
+    FROM departments d
+    WHERE d.department_id = e.department_id
+);
+
+This returns employees whose department exists in the "departments" table.
+
+"EXISTS" is useful when I only care whether a matching record exists.
+
+---
+
+6. Subquery with WHERE
+
+Subqueries are commonly used inside "WHERE".
+
+Example:
+
+SELECT name, salary
+FROM employees
+WHERE salary > (
+    SELECT AVG(salary)
+    FROM employees
+);
+
+This is one of the most common patterns.
+
+---
+
+7. Subquery in FROM
+
+A subquery can also be used inside "FROM".
+
+Example:
+
+SELECT department, average_salary
+FROM (
+    SELECT department, AVG(salary) AS average_salary
+    FROM employees
+    GROUP BY department
+) AS dept_avg;
+
+Here, the inner query creates a temporary result, which the outer query uses like a table.
+
+---
+
+8. Subquery vs JOIN
+
+Both subqueries and JOINs can sometimes solve similar problems, but they work differently.
+
+A JOIN combines columns from different tables:
+
+SELECT e.name, d.department_name
+FROM employees e
+JOIN departments d
+ON e.department_id = d.department_id;
+
+A subquery can first find some result and then use that result in another query:
+
+SELECT name
+FROM employees
+WHERE department_id IN (
+    SELECT department_id
+    FROM departments
+);
+
+I shouldn't think of one as always replacing the other. The situation decides which approach makes more sense.
+
+---
+
+Quick Revision
+
+Subquery       → query inside another query
+IN             → checks against multiple values
+NOT IN         → checks values that aren't in the result
+EXISTS         → checks whether a result exists
+AVG() + subquery → useful for comparing values with an average
+
+Day 7 Takeaway
+
+Today I learned that SQL queries can be nested inside each other.
+
+The basic idea I want to remember is:
+
+Inner query → gets the information
+
+Outer query → uses that information
+
+Subqueries are useful when the result I need depends on another query.
+
+Day 7 completed ✅
