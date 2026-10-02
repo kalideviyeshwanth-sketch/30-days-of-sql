@@ -1,0 +1,136 @@
+# Day 8 – SQL CASE Statement
+
+Today I learned about the `CASE` statement in SQL.
+
+`CASE` is basically SQL's way of doing if-else logic. It lets us check conditions and return different values depending on the result.
+
+## Basic Syntax
+
+```sql
+SELECT column_name,
+       CASE
+           WHEN condition THEN result
+           WHEN condition THEN result
+           ELSE result
+       END AS new_column
+FROM table_name;
+```
+
+## Example
+
+Suppose I have an `employees` table:
+
+```text
+employees
+--------------------------------
+name       salary
+Rahul      25000
+Arjun      45000
+Kiran      70000
+```
+
+I can categorize employees based on salary:
+
+```sql
+SELECT name, salary,
+       CASE
+           WHEN salary >= 60000 THEN 'High'
+           WHEN salary >= 40000 THEN 'Medium'
+           ELSE 'Low'
+       END AS salary_level
+FROM employees;
+```
+
+Output:
+
+```text
+name    salary    salary_level
+--------------------------------
+Rahul   25000     Low
+Arjun   45000     Medium
+Kiran   70000     High
+```
+
+## CASE with Numbers
+
+I can also use `CASE` to create calculated values.
+
+```sql
+SELECT name, salary,
+       CASE
+           WHEN salary >= 50000 THEN salary * 0.10
+           ELSE salary * 0.05
+       END AS bonus
+FROM employees;
+```
+
+Here, employees earning 50,000 or more get a 10% bonus, while the others get 5%.
+
+## CASE with GROUP BY
+
+`CASE` can also be used when grouping data.
+
+```sql
+SELECT
+    CASE
+        WHEN salary >= 50000 THEN 'High Salary'
+        ELSE 'Low Salary'
+    END AS salary_category,
+    COUNT(*) AS employee_count
+FROM employees
+GROUP BY
+    CASE
+        WHEN salary >= 50000 THEN 'High Salary'
+        ELSE 'Low Salary'
+    END;
+```
+
+This groups employees into salary categories.
+
+## CASE vs WHERE
+
+One thing I understood today:
+
+* `WHERE` filters out rows.
+* `CASE` doesn't remove rows. It creates a value based on a condition.
+
+For example:
+
+```sql
+SELECT name
+FROM employees
+WHERE salary >= 50000;
+```
+
+This only returns employees with salary >= 50,000.
+
+But:
+
+```sql
+SELECT name,
+       CASE
+           WHEN salary >= 50000 THEN 'High'
+           ELSE 'Low'
+       END AS category
+FROM employees;
+```
+
+This keeps all employees and gives each one a category.
+
+## Important Points
+
+* `CASE` is similar to if-else logic.
+* `WHEN` contains the condition.
+* `THEN` gives the result.
+* `ELSE` handles everything that doesn't match.
+* `END` finishes the CASE statement.
+* `AS` can be used to give the result a column name.
+* `CASE` is useful for creating categories and calculated columns.
+
+## My Takeaway
+
+`CASE` was one of those SQL topics that became easier once I looked at it like an if-else statement.
+
+It will probably be useful when working with real datasets because we can create meaningful categories directly inside a query.
+
+**Day 8 completed ✅**
