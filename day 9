@@ -1,0 +1,157 @@
+# Day 9 – SQL String Functions
+
+Today I learned about **String Functions in SQL**.
+
+These functions are useful when working with text data, like names, emails, usernames, and other text columns.
+
+## 1. UPPER()
+
+Converts text into uppercase.
+
+```sql
+SELECT UPPER(name) AS name_upper
+FROM employees;
+```
+
+Example:
+
+```text
+Rahul → RAHUL
+```
+
+## 2. LOWER()
+
+Converts text into lowercase.
+
+```sql
+SELECT LOWER(name) AS name_lower
+FROM employees;
+```
+
+Example:
+
+```text
+Rahul → rahul
+```
+
+## 3. LENGTH()
+
+Returns the number of characters in a string.
+
+```sql
+SELECT name, LENGTH(name) AS name_length
+FROM employees;
+```
+
+Example:
+
+```text
+Rahul → 5
+```
+
+## 4. CONCAT()
+
+Used to join two or more strings together.
+
+```sql
+SELECT CONCAT(first_name, ' ', last_name) AS full_name
+FROM employees;
+```
+
+Example:
+
+```text
+Rahul + Kumar → Rahul Kumar
+```
+
+## 5. SUBSTRING()
+
+Used to extract part of a string.
+
+```sql
+SELECT SUBSTRING(name, 1, 3) AS short_name
+FROM employees;
+```
+
+If the name is `Rahul`, the result would be:
+
+```text
+Rah
+```
+
+The exact syntax can vary slightly between SQL databases.
+
+## 6. TRIM()
+
+Removes unnecessary spaces from the beginning and end of a string.
+
+```sql
+SELECT TRIM(name)
+FROM employees;
+```
+
+This is useful when data contains accidental spaces.
+
+Example:
+
+```text
+"  Rahul  " → "Rahul"
+```
+
+## 7. REPLACE()
+
+Replaces part of a string with another value.
+
+```sql
+SELECT REPLACE(email, 'gmail.com', 'outlook.com')
+FROM employees;
+```
+
+Example:
+
+```text
+rahul@gmail.com → rahul@outlook.com
+```
+
+## Using String Functions Together
+
+We can also combine functions.
+
+```sql
+SELECT UPPER(TRIM(name)) AS cleaned_name
+FROM employees;
+```
+
+This first removes extra spaces and then converts the name to uppercase.
+
+## Why String Functions Matter
+
+Real-world databases aren't always perfectly clean.
+
+We might have:
+
+* Extra spaces
+* Different uppercase/lowercase formats
+* Long text that needs to be shortened
+* Names stored in separate columns
+* Text that needs to be replaced or cleaned
+
+String functions help handle these situations directly inside SQL.
+
+## My Takeaway
+
+Today I understood that SQL isn't only about filtering and retrieving data.
+
+It can also be used to **clean and transform text data** before using it for analysis.
+
+The functions I practiced today were:
+
+`UPPER()`
+`LOWER()`
+`LENGTH()`
+`CONCAT()`
+`SUBSTRING()`
+`TRIM()`
+`REPLACE()`
+
+**Day 9 completed ✅**
