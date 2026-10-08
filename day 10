@@ -1,0 +1,130 @@
+# Day 10 – SQL Revision
+
+Today I didn't learn a completely new SQL topic. I used Day 10 to revise some of the important concepts I covered during the first 9 days.
+
+## SELECT, WHERE and ORDER BY
+
+These are some of the basic things I need to be comfortable with.
+
+```sql
+SELECT name, salary
+FROM employees
+WHERE salary > 40000
+ORDER BY salary DESC;
+```
+
+I also revised:
+
+* `DISTINCT`
+* `LIMIT`
+* Comparison operators
+* `AND`, `OR`, `NOT`
+* `IN`
+* `BETWEEN`
+* `LIKE`
+* `IS NULL`
+* `IS NOT NULL`
+
+## GROUP BY and Aggregate Functions
+
+I revised the main aggregate functions:
+
+```sql
+COUNT()
+SUM()
+AVG()
+MIN()
+MAX()
+```
+
+Example:
+
+```sql
+SELECT department, AVG(salary) AS avg_salary
+FROM employees
+GROUP BY department;
+```
+
+I also revised the difference between `WHERE` and `HAVING`.
+
+* `WHERE` filters rows.
+* `HAVING` filters groups after `GROUP BY`.
+
+## JOINs
+
+I revised how multiple tables can be combined using JOINs.
+
+```sql
+SELECT e.name, d.department_name
+FROM employees e
+INNER JOIN departments d
+ON e.department_id = d.department_id;
+```
+
+Important JOINs:
+
+* `INNER JOIN`
+* `LEFT JOIN`
+* `RIGHT JOIN`
+* `FULL OUTER JOIN`
+
+The `ON` condition is what connects the tables.
+
+## Subqueries
+
+I also revised subqueries and how one query can be used inside another.
+
+```sql
+SELECT name, salary
+FROM employees
+WHERE salary > (
+    SELECT AVG(salary)
+    FROM employees
+);
+```
+
+The inner query calculates the average salary, and the outer query uses that result.
+
+## CASE
+
+I revised `CASE` as SQL's way of handling if-else logic.
+
+```sql
+SELECT name, salary,
+       CASE
+           WHEN salary >= 50000 THEN 'High'
+           ELSE 'Low'
+       END AS salary_category
+FROM employees;
+```
+
+## String Functions
+
+I also quickly revised the string functions from Day 9:
+
+```sql
+UPPER()
+LOWER()
+LENGTH()
+CONCAT()
+SUBSTRING()
+TRIM()
+REPLACE()
+```
+
+Example:
+
+```sql
+SELECT UPPER(TRIM(name)) AS cleaned_name
+FROM employees;
+```
+
+## My Takeaway
+
+Today's goal was mainly to make sure I don't just learn new SQL topics and forget the previous ones.
+
+I revised the concepts that I've learned so far and practiced putting multiple concepts together in the same query.
+
+The important part now is getting faster and more comfortable with writing queries without constantly looking at the syntax.
+
+**Day 10 completed ✅**
